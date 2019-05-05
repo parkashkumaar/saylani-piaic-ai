@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Dialogue BOX Simple Project</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+
+	<div class="container-contact100">
+		<div class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
+
+		<div class="wrap-contact100">
+				<div class="contact100-form-title" style="background-image: url(images/recordlogo.gif);">'
+				<span class="contact100-form-title-1">
+					Record......
+				</span>
+
+				<span class="contact100-form-title-2">
+					Please Recording.......
+				</span>
+			</div>
+    	<div class="container-contact100-form-btn">
+					<button id="btnRecord" style="margin: 0px;padding: 0px;">
+						<image src="images/recordbtn.png" style="height: 100px;width: 100px;margin:0px 0px 0px 275px;"/>
+					</button>
+				</div>
+		</div>
+	</div>
+<script>
+	      var message = document.querySelector('#message');
+				var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+					var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+					var grammar = '#JSGF V1.0;'
+					var recognition = new SpeechRecognition();
+					var speechRecognitionList = new SpeechGrammarList();
+					speechRecognitionList.addFromString(grammar, 1);
+					recognition.grammars = speechRecognitionList;
+					recognition.lang = 'en-US';
+					recognition.interimResults = false;
+					recognition.onresult = function(event) {
+							var last = event.results.length - 1;
+							commandOrg = event.results[last][0].transcript;
+							command  = "";
+ 							if(commandOrg == "saylani welfare")
+							{
+								command = "saylaniwelfare.jpg"
+							}else if(commandOrg == "artificial intelligence")
+							{
+								command = "artificialintelligence.jpg"
+							}else if(commandOrg == "Pakistan")
+							{
+								command = "pakistan.jpg"
+							}else if(commandOrg == "India")
+							{
+								command = "india.jpg"
+							}else if(commandOrg == "Pakistan tehreek-e-insaf")
+							{
+								command = "pti.jpg"
+							}else{
+								command = "error.jpg"
+							}
+              
+							document.getElementsByClassName("contact100-form-title")[0].style.backgroundImage = 'url(images/'+command+')';
+							document.getElementsByClassName("contact100-form-title-1")[0].innerHTML=commandOrg
+							document.getElementsByClassName("contact100-form-title-2")[0].innerHTML=commandOrg+" Logo"
+
+					};
+
+					recognition.onspeechend = function() {
+							recognition.stop();
+					};
+
+					recognition.onerror = function(event) {
+							message.textContent = 'Error occurred in recognition: ' + event.error;
+							command = "error";
+							loader()
+							console.log(command)
+					}        
+
+					document.querySelector('#btnRecord').addEventListener('click', function(){
+							recognition.start();
+
+					});
+    </script>
+
+
